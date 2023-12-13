@@ -1,11 +1,10 @@
-# arbitrary example
-resource "nexus_blobstore" "default" {
-  name = "blobstore-file"
-  type = "File"
-  path = "/nexus-data/blobstore-file"
-
-  soft_quota {
-    limit = 1024000000
-    type  = "spaceRemainingQuota"
-  }
+resource "nexus_security_user" "admin" {
+  userid    = "testAdmin"
+  firstname = "test"
+  lastname  = "Admin"
+  email     = "nexus@example.com"
+  password  = "admin123"
+  roles     = ["nx-admin"]
+  status    = "active"
+  source    = "default"
 }

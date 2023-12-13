@@ -43,6 +43,11 @@ func DataSourceSecurityUser() *schema.Resource {
 				Type:        schema.TypeString,
 				Computed:    true,
 			},
+			"source": {
+				Description: "The source of the user, e.g. default or ldap.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 		},
 	}
 }

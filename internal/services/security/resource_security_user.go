@@ -67,6 +67,16 @@ func ResourceSecurityUser() *schema.Resource {
 					"disabled",
 				}, false),
 			},
+			"source": {
+				Default:     "default",
+				Description: "The source of the user, e.g. default or ldap.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ValidateFunc: validation.StringInSlice([]string{
+					"default",
+					"ldap",
+				}, false),
+			},
 		},
 	}
 }
@@ -79,6 +89,7 @@ func getSecurityUserFromResourceData(d *schema.ResourceData) security.User {
 		EmailAddress: d.Get("email").(string),
 		Password:     d.Get("password").(string),
 		Status:       d.Get("status").(string),
+		Source:       d.Get("source").(string),
 		Roles:        tools.InterfaceSliceToStringSlice(d.Get("roles").(*schema.Set).List()),
 	}
 }
@@ -113,6 +124,7 @@ func resourceSecurityUserRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("lastname", user.LastName)
 	d.Set("roles", tools.StringSliceToInterfaceSlice(user.Roles))
 	d.Set("status", user.Status)
+	d.Set("source", user.Source)
 	d.Set("userid", user.UserID)
 
 	return nil
